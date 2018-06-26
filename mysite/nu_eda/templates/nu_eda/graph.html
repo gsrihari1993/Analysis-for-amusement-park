@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+
+body {
+  font: 10px sans-serif;
+  fill:#d3d3d3;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: orange;
+}
+
+.bar:hover {
+  fill: orangered ;
+}
+
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+path.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+circle {
+  fill: #ccc;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+text {
+  fill: #000;
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+path {
+  stroke: #fff;
+}
+
+.node rect {
+  cursor: move;
+  fill-opacity: .9;
+  shape-rendering: crispEdges;
+}
+
+.node text {
+  pointer-events: none;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.link {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .2;
+}
+
+.link:hover {
+  stroke-opacity: .5;
+}
+
+svg text{
+  fill:grey;
+  font-size:11px;
+}
+svg .values text{
+  pointer-events:none;
+  stroke-width: 0.5px;
+}
+.groups:hover{
+  cursor:pointer;
+  font-weight:bold;
+}
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+	width: 400px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 400px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+section {
+	height: 100vh;
+}
+
+/* Screens Settings */
+#screen1 {	
+	background: #43b29d;
+}
+
+#screen1 p {
+	padding-top: 200px;
+	
+}
+
+#screen2 {
+	background: #efc94d;
+}
+
+#screen3 {
+	background: #e1793d;
+}
+
+nav {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 80px;
+	background: #fff;
+}
+
+nav li {
+	display: inline-block;
+	padding: 24px 10px;
+}
+
+.fixed {
+	position: fixed; 
+	top: 0; 
+	height: 80px; 
+	z-index: 1;
+}
+
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+	font-size: 16px;
+	text-align: center;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    
+    background-color: #4CAF50;
+    color: white;
+}
+
+#container {
+    width: 1500px;
+    background-color: #ffcc33;
+    margin: auto;
+}
+#first {
+    width: 750px;
+    float: left;
+    height: 50px;
+        background-color: #d3d3d3;
+	text-align: center;	
+}
+#second {
+    width: 750px;
+    float: left;
+    height: 50px;
+    background-color: #d3d3d3;
+    text-align: center;
+}
+#container1 {
+    width: 1500px;
+    background-color: #ffcc33;
+    margin: auto;
+}
+#first1 {
+    width: 750px;
+    float: left;
+    height: 50px;
+        background-color: #d3d3d3;
+	text-align: center;	
+}
+#second1 {
+    width: 750px;
+    float: left;
+    height: 50px;
+    background-color: #d3d3d3;
+    text-align: center;
+}
+#container2 {
+    width: 750px;
+    background-color: #ffcc33;
+    margin: auto;
+}
+#first2 {
+    width: 750px;
+    float: left;
+    height: 50px;
+        background-color: #d3d3d3;
+	text-align: center;	
+}
+#second2 {
+    width: 750px;
+    float: left;
+    height: 50px;
+    background-color: #d3d3d3;
+    text-align: center;
+}
+</style>
+<header class="header">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+   $(document).ready(function(){
+	   $(window).bind('scroll', function() {
+	   var navHeight = $( window ).height();
+			 if ($(window).scrollTop() > navHeight) {
+				 $('nav').addClass('fixed');
+			 }
+			 else {
+				 $('nav').removeClass('fixed');
+			 }
+		});
+	});
+</script>
+<section id="screen1">
+	<p style = "text-align:center;color: white;"><font size="32">Nickelodeon Universe Customer Experience</font></p>
+	<p style = "text-align:center;color:#d6d6d6;"><font size="28">August 26 2017</font></p>
+</section>
+</header>
+<body>
+<table id="customers" >
+    <thead>
+        <tr>
+            <th>Happiness Index</th>
+            <th>Customer Count</th>
+			<th>Customer Count Previous Week</th>
+			<th>Happiness Index WoW%</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Extremely Satisfied</td>
+            <td>655</td>
+			<td>188</td>
+			<td>163.9%</td>
+        </tr>
+        <tr>
+            <td>Very Satisfied</td>
+            <td>1338</td>
+			<td>799</td>
+			<td>145.57%</td>
+        </tr>
+        <tr>
+            <td>Somewhat Satisfied</td>
+            <td>791</td>
+			<td>463</td>
+			<td>145.41%</td>
+        </tr>
+        <tr>
+            <td>Satisfied</td>
+            <td>177</td>
+			<td>169</td>
+			<td>132.78%</td>
+        </tr>
+        <tr>
+            <td>Not Satisfied</td>
+            <td>8</td>
+			<td>29</td>
+			<td>13.11%</td>
+        </tr>
+    </tbody>
+</table>
+<div id="container">
+    <div id="first"><h1>Number of people riding the same rides</h1></div>
+    <div id="second"><h1>Number of people riding distinct rides</h1></div>
+    <div id="clear"></div>
+</div>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 40, left: 60},
+    width = 750 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+
+var y = d3.scale.linear().range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(10);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+d3.json("{% url "index"%}", function(error, data) {
+
+    data.forEach(function(d) {
+        d.no_of_rides = d.no_of_rides;
+        d.count_items = +d.count_items;
+    });
+	
+  x.domain(data.map(function(d) { return d.no_of_rides; }));
+  y.domain([0, d3.max(data, function(d) { return d.count_items; })]);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", "-.55em")
+      .attr("transform", "rotate(-90)" );
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -60)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Customer count");
+  
+  svg.selectAll("bar")
+      .data(data)
+    .enter().append("rect")
+      .style("fill", "grey")
+      .attr("x", function(d) { return x(d.no_of_rides); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.count_items); })
+      .attr("height", function(d) { return height - y(d.count_items)})
+	  .text(function(d) { return d.no_of_rides }); 
+
+});
+
+</script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 40, left: 60},
+    width = 750 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+
+var y = d3.scale.linear().range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(5);
+
+var svg5 = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+
+d3.json("{% url "index5"%}", function(error, data) {
+
+    data.forEach(function(d) {
+        d.distinct_rides = d.distinct_rides;
+        d.count_items = +d.count_items;
+    });
+	
+  x.domain(data.map(function(d) { return d.distinct_rides; }));
+  y.domain([0, d3.max(data, function(d) { return d.count_items; })]);
+
+  svg5.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .selectAll("text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", "-.55em")
+      .attr("transform", "rotate(-90)" );
+
+  svg5.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", -55)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Customer count");
+
+  svg5.selectAll("bar")
+      .data(data)
+    .enter().append("rect")
+      .style("fill", "steelblue")
+      .attr("x", function(d) { return x(d.distinct_rides); })
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.count_items); })
+      .attr("height", function(d) { return height - y(d.count_items); });
+
+});
+
+</script>
+<div id="container1">
+    <div id="first1"><h1>Customer count split on Ticket categories</h1></div>
+    <div id="second1"><h1>Path probability from one ride to the next </h1></div>
+    <div id="clear"></div>
+</div>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script type = "text/javascript">
+var margin = {top: 30, right: 20, bottom: 70, left: 50},
+	width = 800,
+    height = 400,
+    radius = (Math.min(width, height) / 2) - 20;
+
+var formatNumber = d3.format(",d");
+
+var x = d3.scale.linear()
+    .range([0, 2 * Math.PI]);
+
+var y = d3.scale.sqrt()
+    .range([0, radius]);
+
+var color = d3.scale.category20c();
+
+var partition = d3.layout.partition()
+    .value(function(d) { return d.size; });
+
+var arc = d3.svg.arc()
+    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+
+var svg2 = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height+100)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+
+d3.json("{% url "index2" %}", function(error, root) {
+  if (error) throw error;
+  
+  svg2.selectAll("path")
+      .data(partition.nodes(root))
+    .enter().append("path")
+      .attr("d", arc)
+      .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
+      .on("click", click)
+    .append("title")
+      .text(function(d) { return d.name + "\n" + formatNumber(d.value); });
+});
+
+function click(d) {
+  svg2.transition()
+      .duration(750)
+      .tween("scale", function() {
+        var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+            yd = d3.interpolate(y.domain(), [d.y, 1]),
+            yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+        return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
+      })
+    .selectAll("path")
+      .attrTween("d", function(d) { return function() { return arc(d); }; });
+}
+
+d3.select(self.frameElement).style("height", height + "px");
+
+</script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="http://vizjs.org/viz.v1.1.0.min.js"></script>
+<script>
+data3 = d3.json("{% url "index3" %}", function(error, foot) {
+var colors = {
+"Avatar":         "#da4480"
+,"Azul":    "#5ab449"
+,"Balloon":    "#7f5acd"
+,"BigRigs":        "#aab740"
+,"Blasters": "#ce58c0"
+,"BlueSkidoo":        "#50a26e"
+,"BrainSurge": "#d1434b"
+,"Carousel":      "#45c0bc"
+,"CrazyCars":"#ce5929"
+,"Danny": "#4e7bda"
+,"Diego":  "#d49d3c"
+,"FerrisWhl":   "#6660a3"
+,"Flyboat":    "#7b853c"
+,"FOC":     "#b58dde"
+,"Hayride":     "#97622e"
+,"Jimmy":   "#609dd6"
+,"LogRide":      "#e29074"
+,"Pineapple":        "#9c4b88"
+,"Rugrats":  "#ab505f"
+,"ShellShock":   "#dc85b6"
+,"Splat":   "#dc85b6"
+,"SpongeBob":   "#4e7bda"
+,"Streak":   "#7f5acd"
+,"Swings":   "#dc85b6"
+,"Swiper":   "#dc85b6"
+,"TakAttack":   "#dc85b6"
+,"Bubbler":   "#dc85b6"
+,"Shredder":   "#dc85b6"
+};
+var ch = viz.ch().data(foot)
+      .padding(.01)
+	  .innerRadius(180)
+	  .outerRadius(200)
+	  .duration(1000)
+	  .chordOpacity(0.3)
+	  .labelPadding(.03)
+      .fill(function(d){ return colors[d];});
+
+var width=700, height=600;
+
+var svg = d3.select("body").append("svg").attr("height",height).attr("width",width);
+
+svg.append("g").attr("transform", "translate(300,300)").call(ch);
+
+// adjust height of frame in bl.ocks.org
+d3.select(self.frameElement).style("height", height+"px").style("width", width+"px");
+});     
+</script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<div id="container2">
+    <div id="first2" style = "text-align:center;"><h1>Heat map illustrating the ridership count of rides per hour</h1></div>
+    <div id="clear"></div>
+</div>
+<script>
+  var itemSize = 22,
+      cellSize = itemSize - 1,
+      margin = {top: 50, right: 20, bottom: 20, left: 525};
+      
+  var width = 1500 ,
+      height = 600 ;
+
+  var svg4 = d3.select('body')
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  d3.json("{% url "index4" %}", function ( response ) {
+    var data = response.map(function( item ) {
+        var newItem = {};
+        newItem.country = item.ride;
+        newItem.product = item.hr;
+        newItem.value = item.count_items;
+
+        return newItem;
+    })
+
+    var x_elements = d3.set(data.map(function( item ) { return item.product; } )).values(),
+        y_elements = d3.set(data.map(function( item ) { return item.country; } )).values();
+
+    var xScale = d3.scale.ordinal()
+        .domain(x_elements)
+        .rangeBands([0,x_elements.length * (itemSize+15)]);
+
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .tickFormat(function (d) {
+            return d;
+        })
+        .orient("top");
+
+    var yScale = d3.scale.ordinal()
+        .domain(y_elements)
+        .rangeBands([0, y_elements.length * itemSize]);
+
+    var yAxis = d3.svg.axis()
+        .scale(yScale)
+        .tickFormat(function (d) {
+            return d;
+        })
+        .orient("left");
+
+    var colorScale = d3.scale.threshold()
+        .domain([-1,25,50,100,175,300])
+        .range(["#000000", "#ffff00","#adff2f", "#32CD32", "#27AE60","#006400"]);
+
+
+    var cells = svg4.selectAll('rect')
+        .data(data)
+        .enter().append('g').append('rect')
+        .attr('class', 'cell')
+        .attr('width', cellSize+15)
+        .attr('height', cellSize)
+        .attr('y', function(d) { return yScale(d.country); })
+        .attr('x', function(d) { return xScale(d.product); })
+        .attr('fill', function(d) { return colorScale(d.value)});
+
+    svg4.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .selectAll('text')
+        .attr('font-weight', 'normal');
+
+    svg4.append("g")
+        .attr("class", "x axis")
+        .call(xAxis)
+        .selectAll('text')
+        .attr('font-weight', 'normal')
+        .style("text-anchor", "start")
+        .attr("dx", ".8em")
+        .attr("dy", ".5em")
+        .attr("transform", function (d) {
+            return "rotate(-65)";
+        });
+  });
+</script>
+</body>
+</html>
